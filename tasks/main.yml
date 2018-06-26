@@ -1,0 +1,18 @@
+- assert:
+    that: jar is defined
+
+- debug:
+    msg: "{{service}}: {{install_path}}"
+
+- get_url:
+    dest: "{{install_path}}"
+    url: "{{jar}}"
+    validate_certs: "{{validate_certs}}"
+
+- systemd_service:
+    Name: "{{service}}"
+    ExecStart: /usr/local/bin/java  -Xms{{heap}} -Xmx{{heap}} {{JVM_OPTS}} -jar {{install_path}} {{args}}
+
+- systemd:
+    name: "{{service}}"
+    state: started

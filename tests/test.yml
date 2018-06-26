@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - moshloop.systemd
+  tasks:
+    - include_role: name=moshloop.java,1.0
+      vars:
+        validate_certs: no
+    - include_role: name=../../ansible-systemd-java-service
+      vars:
+        jar: https://search.maven.org/remotecontent?filepath=net/sourceforge/winstone/winstone/0.9.10/winstone-0.9.10.jar
+        args: --webroot /tmp
+        validate_certs: no
