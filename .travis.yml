@@ -6,8 +6,7 @@ env:
   - distro: centos7
 
 script:
-  - sudo pip install "ansible-run>=2.1"
-  - ansible-galaxy install moshloop.java moshloop.systemd
+  - sudo pip install "ansible-run>=2.3"
   - image=$distro ansible-test test/test.yml
 
 notifications:
