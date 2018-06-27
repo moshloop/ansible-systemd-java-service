@@ -1,0 +1,14 @@
+---
+services: docker
+
+env:
+  - distro: ubuntu1804
+  - distro: centos7
+
+script:
+  - sudo pip install "ansible-run>=2.1"
+  - image=$distro ansible-test test/test.yml
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
+]
