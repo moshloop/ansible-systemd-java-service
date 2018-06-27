@@ -10,5 +10,5 @@ galaxy_info:
     - java
     - spring boot
   dependencies:
-    - moshloop.systemd,1.3.0
-    - moshloop.java,1.0
+    - moshloop.systemd
+    - moshloop.java
