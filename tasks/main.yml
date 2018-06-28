@@ -22,11 +22,11 @@
     url: "{{jar}}"
     validate_certs: "{{validate_certs}}"
 
-- debug: msg="/usr/local/bin/java -Xms{{heap}} -Xmx{{heap}} {{JVM_OPTS | default(jvm_opts)}} -jar {{install_path}} {{args}}" verbosity=1
+- debug: msg="/usr/local/bin/java -Xms{{heap}} -Xmx{{heap}} {{JVM_OPTS | default(jvm_opts) | default('')}} -jar {{install_path}} {{args}}" verbosity=1
 
 - systemd_service:
     Name: "{{service}}"
-    ExecStart: /usr/local/bin/java -Xms{{heap}} -Xmx{{heap}} {{JVM_OPTS | default(jvm_opts)}} -jar {{install_path}} {{args}}
+    ExecStart: /usr/local/bin/java -Xms{{heap}} -Xmx{{heap}} {{JVM_OPTS | default(jvm_opts)  | default('')}} -jar {{install_path}} {{args}}
 
 - systemd:
     name: "{{service}}"
