@@ -4,6 +4,3 @@ filename: "{{jar | basename }}"
 install_path: "{{install_dir}}/{{filename}}"
 validate_certs: yes
 service: "{{filename | regex_search('^\\w+') }}"
-args: ""
-JVM_OPTS: ""
-heap: "{{  '%0d' | format(ansible_memtotal_mb / 2 / 1024) }}g"

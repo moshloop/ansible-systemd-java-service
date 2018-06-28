@@ -1,3 +1,16 @@
+- set_fact: heap=
+
+# you can't pass a dictionary directly to include_role using vars: args,
+# so we need to use a "handovere variable" see https://github.com/ansible/ansible/issues/19084
+- set_fact: {"{{ handover_item.key }}": "{{ handover_item.value }}"}
+  with_dict: "{{ handover }}"
+  loop_control:
+    loop_var: handover_item
+  when: handover is defined
+
+- set_fact: heap="{{  '%0d' | format(ansible_memtotal_mb / 2 / 1024) }}g"
+  when: heap is not defined or heap == ''
+
 - assert:
     that: jar is defined
 
@@ -9,9 +22,11 @@
     url: "{{jar}}"
     validate_certs: "{{validate_certs}}"
 
+- debug: msg="/usr/local/bin/java -Xms{{heap}} -Xmx{{heap}} {{JVM_OPTS | default(jvm_opts)}} -jar {{install_path}} {{args}}" verbosity=1
+
 - systemd_service:
     Name: "{{service}}"
-    ExecStart: /usr/local/bin/java  -Xms{{heap}} -Xmx{{heap}} {{JVM_OPTS}} -jar {{install_path}} {{args}}
+    ExecStart: /usr/local/bin/java -Xms{{heap}} -Xmx{{heap}} {{JVM_OPTS | default(jvm_opts)}} -jar {{install_path}} {{args}}
 
 - systemd:
     name: "{{service}}"

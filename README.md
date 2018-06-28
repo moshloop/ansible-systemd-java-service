@@ -15,7 +15,7 @@ A ansible role that installs a fat jar (commonly produced by tools like dropwiza
 | service        |                      |             |
 | args           |                      |             |
 | heap           | 50% of available RAM | Heap size   |
-| JVM_OPTS       |                      |             |
+| jvm_opts       |                      |             |
 
 ### Example
 
